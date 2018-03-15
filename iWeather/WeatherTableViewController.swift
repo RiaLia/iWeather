@@ -12,7 +12,7 @@ import CoreLocation
 class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
     
     let cities = ["Göteborg", "Stockholm", "Malmö", "Sundsvall", "Karlstad"]
-    let weather = ["Sunny", "Rain" ]
+    let weather = ["Sun", "Rain", "Snow", "Thunder", "SemiSunny" ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +43,9 @@ class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
         //let custom = CustomTableCell()
         let cityName = cities[indexPath.row]
         cell.cityText.text = cityName
+        let weatherStatus = weather[indexPath.row]
+        cell.descText.text = weatherStatus
+        cell.iconImage.image = UIImage(named: weatherStatus)
 
         return cell
     }
