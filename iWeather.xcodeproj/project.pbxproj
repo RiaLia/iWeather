@@ -13,6 +13,7 @@
 		102EA2B9204D5C7600036B65 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 102EA2B7204D5C7600036B65 /* LaunchScreen.storyboard */; };
 		102EA2C12057FE6700036B65 /* WeatherTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102EA2C02057FE6700036B65 /* WeatherTableViewController.swift */; };
 		10D5B3D62059762500F25D1E /* CustomTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D5B3D52059762500F25D1E /* CustomTableCell.swift */; };
+		10D5B3D8205AA44F00F25D1E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D5B3D7205AA44F00F25D1E /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		102EA2BA204D5C7600036B65 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		102EA2C02057FE6700036B65 /* WeatherTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTableViewController.swift; sourceTree = "<group>"; };
 		10D5B3D52059762500F25D1E /* CustomTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableCell.swift; sourceTree = "<group>"; };
+		10D5B3D7205AA44F00F25D1E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +64,7 @@
 				102EA2B7204D5C7600036B65 /* LaunchScreen.storyboard */,
 				102EA2BA204D5C7600036B65 /* Info.plist */,
 				102EA2C02057FE6700036B65 /* WeatherTableViewController.swift */,
+				10D5B3D7205AA44F00F25D1E /* DetailViewController.swift */,
 				10D5B3D52059762500F25D1E /* CustomTableCell.swift */,
 			);
 			path = iWeather;
@@ -142,6 +145,7 @@
 				102EA2C12057FE6700036B65 /* WeatherTableViewController.swift in Sources */,
 				102EA2AF204D5C7600036B65 /* AppDelegate.swift in Sources */,
 				10D5B3D62059762500F25D1E /* CustomTableCell.swift in Sources */,
+				10D5B3D8205AA44F00F25D1E /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

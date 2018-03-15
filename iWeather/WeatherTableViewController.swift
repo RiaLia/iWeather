@@ -11,6 +11,8 @@ import CoreLocation
 
 class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
     
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let cities = ["Göteborg", "Stockholm", "Malmö", "Sundsvall", "Karlstad"]
     let weather = ["Sun", "Rain", "Snow", "Thunder", "SemiSunny" ]
     
@@ -39,8 +41,6 @@ class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! CustomTableCell
 
-        // Här skulle jag vilja hämta in CustumTableCell och sen ändra innehållet
-        //let custom = CustomTableCell()
         let cityName = cities[indexPath.row]
         cell.cityText.text = cityName
         let weatherStatus = weather[indexPath.row]
@@ -86,14 +86,21 @@ class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-    }
-    */
+       // if segue.identifier == "sendToDetail" {}
+        if segue.identifier == "sendToDetail" {
+            var selectedRow = self.tableView.indexPathForSelectedRow
+            let nextVc:DetailViewController = segue.destination as! DetailViewController
+            nextVc.rowId = selectedRow!.row
+            nextVc.passingCityText = cities[selectedRow!.row]
+        }
+    
 
+    }
 }
