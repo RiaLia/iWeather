@@ -239,11 +239,71 @@
                             <outlet property="delegate" destination="dMk-1m-P0n" id="ifH-Ma-ApC"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="IWeather" id="MVb-A2-QYm"/>
+                    <navigationItem key="navigationItem" title="IWeather" id="MVb-A2-QYm">
+                        <barButtonItem key="rightBarButtonItem" title="API" id="41W-14-jzH">
+                            <connections>
+                                <segue destination="18R-Dj-P2k" kind="show" id="dUA-Ic-Yff"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fHC-m1-s0p" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="309.60000000000002" y="116.49175412293854"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="pow-Gz-lp7">
+            <objects>
+                <viewController id="18R-Dj-P2k" customClass="APIViewController" customModule="iWeather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jKU-cw-C7v">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter City" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="xgV-Gh-Zqe">
+                                <rect key="frame" x="16" y="92" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" textContentType="address-level2"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BhE-Rl-ZSk">
+                                <rect key="frame" x="16" y="193" width="343" height="454"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UHQ-iR-NQm">
+                                <rect key="frame" x="153" y="143" width="69" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" red="0.3411764706" green="0.51764705879999995" blue="0.63921568630000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <action selector="search:" destination="18R-Dj-P2k" eventType="touchUpInside" id="iYy-jb-rtZ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.49896503549999999" green="0.60432162659999999" blue="0.72937817260000004" alpha="0.60999036819999997" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="xgV-Gh-Zqe" firstAttribute="trailing" secondItem="jKU-cw-C7v" secondAttribute="trailingMargin" id="2Mc-UA-HoY"/>
+                            <constraint firstItem="UHQ-iR-NQm" firstAttribute="top" secondItem="xgV-Gh-Zqe" secondAttribute="bottom" constant="21" id="2OT-Bl-Z5K"/>
+                            <constraint firstAttribute="bottom" secondItem="BhE-Rl-ZSk" secondAttribute="bottom" constant="20" symbolic="YES" id="BsV-Cg-hvP"/>
+                            <constraint firstItem="xgV-Gh-Zqe" firstAttribute="centerX" secondItem="UHQ-iR-NQm" secondAttribute="centerX" id="D0y-rb-1qJ"/>
+                            <constraint firstItem="BhE-Rl-ZSk" firstAttribute="top" secondItem="UHQ-iR-NQm" secondAttribute="bottom" constant="20" id="HrA-UN-EDb"/>
+                            <constraint firstItem="xgV-Gh-Zqe" firstAttribute="leading" secondItem="BhE-Rl-ZSk" secondAttribute="leading" id="O5N-Nw-Qmu"/>
+                            <constraint firstItem="xgV-Gh-Zqe" firstAttribute="leading" secondItem="jKU-cw-C7v" secondAttribute="leadingMargin" id="XMJ-AO-g1i"/>
+                            <constraint firstItem="UHQ-iR-NQm" firstAttribute="leading" secondItem="oOq-va-E4v" secondAttribute="leading" constant="153" id="YpL-Cd-gS9"/>
+                            <constraint firstItem="xgV-Gh-Zqe" firstAttribute="trailing" secondItem="BhE-Rl-ZSk" secondAttribute="trailing" id="ap6-Qh-ip8"/>
+                            <constraint firstItem="xgV-Gh-Zqe" firstAttribute="top" secondItem="oOq-va-E4v" secondAttribute="top" constant="28" id="voP-vm-5Lc"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="oOq-va-E4v"/>
+                    </view>
+                    <connections>
+                        <outlet property="resultText" destination="BhE-Rl-ZSk" id="k7j-gx-jR8"/>
+                        <outlet property="searchText" destination="xgV-Gh-Zqe" id="kIv-89-Kz6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NRR-mN-B4x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1125.5999999999999" y="-306.29685157421289"/>
         </scene>
         <!--Detail-->
         <scene sceneID="9PG-0l-RwV">
@@ -418,7 +478,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nbS-x3-KNV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1140" y="-115.59220389805098"/>
+            <point key="canvasLocation" x="1135" y="384"/>
         </scene>
     </scenes>
     <resources>
