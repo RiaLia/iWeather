@@ -9,16 +9,50 @@
 import UIKit
 import CoreLocation
 
-class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
-    
+class WeatherTableViewController: UITableViewController, UISearchResultsUpdating {
+  
     @IBOutlet weak var searchBar: UISearchBar!
     
     let cities = ["Göteborg", "Stockholm", "Malmö", "Sundsvall", "Karlstad"]
     let weather = ["Sun", "Rain", "Snow", "Thunder", "SemiSunny" ]
+    var searchResult : [String] = []
+    var searchController : UISearchController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        definesPresentationContext = true
+        
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        
+        navigationItem.searchController = searchController
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        searchController.searchBar.becomeFirstResponder()
+    }
+
+    
+    /*
+ 
+ func updateSearchResults(for searchController: UISearchController) {
+ if let text = searchController.searchBar.text?.lowercased() {
+ searchResult = fruits.filter { $0.lowercased().contains(text) }
+ } else {
+ searchResult = []
+ }
+ tableView.reloadData()
+ 
+ } */
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text?.lowercased() {
+            searchResult = cities.filter { $0.lowercased().contains(text) }
+        }else {
+            searchResult = []
+        }
+        tableView.reloadData()
     }
 
 
@@ -28,24 +62,52 @@ class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     // MARK: - Table view data source
+    
+    var useSearchResult : Bool {
+        if let text = searchController.searchBar.text {
+            if text.isEmpty {
+                return false
+            } else {
+                return searchController.isActive
+            }
+        } else {
+            return false
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if useSearchResult {
+            return searchResult.count
+        } else {
         return cities.count
+        }
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! CustomTableCell
 
-        let cityName = cities[indexPath.row]
+        let array : [String]
+        
+        if useSearchResult {
+            array = searchResult
+        } else {
+            array = cities
+        }
+        
+        cell.cityText.text = array[indexPath.row]
+        
+        
+        
+    /*    let cityName = cities[indexPath.row]
         cell.cityText.text = cityName
         let weatherStatus = weather[indexPath.row]
         cell.descText.text = weatherStatus
-        cell.iconImage.image = UIImage(named: weatherStatus)
+        cell.iconImage.image = UIImage(named: weatherStatus)  */
 
         return cell
     }
@@ -88,12 +150,8 @@ class WeatherTableViewController: UITableViewController, UISearchBarDelegate {
 
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-       // if segue.identifier == "sendToDetail" {}
         if segue.identifier == "sendToDetail" {
             var selectedRow = self.tableView.indexPathForSelectedRow
             let nextVc:DetailViewController = segue.destination as! DetailViewController

@@ -14,7 +14,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet weak var cityText: UILabel!
     
-    var rowId = 0
+    var rowId : Int!
     var passingCityText = ""
    
     
