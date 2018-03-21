@@ -18,7 +18,8 @@ class CustomTableCell: UITableViewCell {
     @IBOutlet weak var dateText: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     
-    var id : Int!
+    var data : Int?
+    
     
     // var data : String?
     // För att kunna hämta RÄTT cell även när man söker

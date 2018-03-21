@@ -13,8 +13,9 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
   
     @IBOutlet weak var searchBar: UISearchBar!
     
+
     let cities = ["Göteborg", "Stockholm", "Malmö", "Sundsvall", "Karlstad"]
-    let weather = ["Sun", "Rain", "Snow", "Thunder", "SemiSunny" ]
+    let weather = ["Clear", "Rain", "Snow", "Thunder", "SemiSunny" ]
     var searchResult : [String] = []
     var searchController : UISearchController!
     
@@ -34,18 +35,7 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         searchController.searchBar.becomeFirstResponder()
     }
 
-    
-    /*
- 
- func updateSearchResults(for searchController: UISearchController) {
- if let text = searchController.searchBar.text?.lowercased() {
- searchResult = fruits.filter { $0.lowercased().contains(text) }
- } else {
- searchResult = []
- }
- tableView.reloadData()
- 
- } */
+
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text?.lowercased() {
             searchResult = cities.filter { $0.lowercased().contains(text) }
@@ -76,7 +66,7 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -98,16 +88,11 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         } else {
             array = cities
         }
-        
         cell.cityText.text = array[indexPath.row]
-        
-        
-        
-    /*    let cityName = cities[indexPath.row]
-        cell.cityText.text = cityName
         let weatherStatus = weather[indexPath.row]
         cell.descText.text = weatherStatus
-        cell.iconImage.image = UIImage(named: weatherStatus)  */
+        cell.iconImage.image = UIImage(named: weatherStatus)
+        
 
         return cell
     }
@@ -150,15 +135,39 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
 
     
     // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if segue.identifier == "sendToDetail" {
-            var selectedRow = self.tableView.indexPathForSelectedRow
+            let selectedRow = self.tableView.indexPathForSelectedRow!.row
             let nextVc:DetailViewController = segue.destination as! DetailViewController
-            nextVc.rowId = selectedRow!.row
-            nextVc.passingCityText = cities[selectedRow!.row]
+            nextVc.rowId = selectedRow
+            nextVc.passingCityText = cities[selectedRow]
         }
-    
-
     }
 }
+
+    /*
+ override func prepare(for segue: UIStoryboardSegue, sender: Any!)
+ {
+ if let cell = sender as? CustomTableCell
+ {
+ let i = cell.data!
+    print(i)
+ if segue.identifier == "sendToDetail"
+ {
+ if useSearchResult
+ {
+ let name1 = segue.destination as! DetailViewController
+ name1.id = self.searchResult[i]
+ }
+ else
+ {
+ let name1 = segue.destination as! DetailViewController
+ name1.id = self.cities[i]
+ 
+ }
+ }
+ }
+ }  */
+ 
+

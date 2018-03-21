@@ -8,26 +8,6 @@
 
 import UIKit
 
-struct Main : Codable {
-    let temp: Float
-}
-
-struct Desc : Codable {
-    let description: String?
-    let main: String?
-}
-
-struct Info : Codable {
-    let weather: [Desc]
-    let main : Main
-    let dt_txt : String?
-}
-
-struct WeatherResponse: Codable {
-    let list: [Info]
-}
-
-
 class APIViewController: UIViewController {
 
     @IBOutlet weak var searchText: UITextField!
@@ -74,29 +54,14 @@ class APIViewController: UIViewController {
                             let weatherResponse = try decoder.decode(WeatherResponse.self, from: actualData)
                             
                             DispatchQueue.main.async {
-                                
-                                // TODO! Se till att det går att hämta ut mer av informationen.
-                                let currentTime = weatherResponse.list[0].dt_txt
-                                self.dateText.text = currentTime
-                                
-                                let a = weatherResponse.list[0].weather[0].description
-                                let b = "Weather condition: \(a!)"
-                                self.conditionText.text = b
-                                
-                                let c = weatherResponse.list[0].main.temp
-                                let d = "Temp is \(c)°C"
-                                self.temperaturText.text = d
-                                
-                                let laterTime = weatherResponse.list[5].dt_txt
-                                self.dateText2.text = laterTime
-                                
-                                let e = weatherResponse.list[5].weather[0].description
-                                let f = "Weather condition: \(e!)"
-                                self.conditionText2.text = f
-                                
-                                let g = weatherResponse.list[5].main.temp
-                                let h = "Temp is \(g)°C"
-                                self.temperaturText2.text = h
+                                // First
+                                self.dateText.text = weatherResponse.list[0].dt_txt
+                                self.conditionText.text = "Weather condition: \(weatherResponse.list[0].weather[0].description!)"
+                                self.temperaturText.text = "Temp is \(weatherResponse.list[0].main.temp)°C"
+                               // Second
+                                self.dateText2.text = weatherResponse.list[4].dt_txt
+                                self.conditionText2.text = "Weather condition: \(weatherResponse.list[4].weather[0].description!)"
+                                self.temperaturText2.text = "Temp is \(weatherResponse.list[4].main.temp)°C"
                             }
                             
                         } catch let e {

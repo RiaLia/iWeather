@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1021954F206278DE003BF667 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021954E206278DE003BF667 /* Weather.swift */; };
+		1021955120627AC6003BF667 /* CustomDayTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1021955020627AC6003BF667 /* CustomDayTableViewCell.swift */; };
 		102EA2AF204D5C7600036B65 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102EA2AE204D5C7600036B65 /* AppDelegate.swift */; };
 		102EA2B4204D5C7600036B65 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 102EA2B2204D5C7600036B65 /* Main.storyboard */; };
 		102EA2B6204D5C7600036B65 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 102EA2B5204D5C7600036B65 /* Assets.xcassets */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1021954E206278DE003BF667 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		1021955020627AC6003BF667 /* CustomDayTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDayTableViewCell.swift; sourceTree = "<group>"; };
 		102EA2AB204D5C7600036B65 /* iWeather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iWeather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		102EA2AE204D5C7600036B65 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		102EA2B3204D5C7600036B65 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -61,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				102EA2AE204D5C7600036B65 /* AppDelegate.swift */,
+				1021954E206278DE003BF667 /* Weather.swift */,
 				102EA2B2204D5C7600036B65 /* Main.storyboard */,
 				102EA2B5204D5C7600036B65 /* Assets.xcassets */,
 				102EA2B7204D5C7600036B65 /* LaunchScreen.storyboard */,
@@ -69,6 +74,7 @@
 				10D5B3D7205AA44F00F25D1E /* DetailViewController.swift */,
 				10D5B3D52059762500F25D1E /* CustomTableCell.swift */,
 				10D5B3D9205AF82100F25D1E /* APIViewController.swift */,
+				1021955020627AC6003BF667 /* CustomDayTableViewCell.swift */,
 			);
 			path = iWeather;
 			sourceTree = "<group>";
@@ -149,7 +155,9 @@
 				102EA2AF204D5C7600036B65 /* AppDelegate.swift in Sources */,
 				10D5B3DA205AF82100F25D1E /* APIViewController.swift in Sources */,
 				10D5B3D62059762500F25D1E /* CustomTableCell.swift in Sources */,
+				1021954F206278DE003BF667 /* Weather.swift in Sources */,
 				10D5B3D8205AA44F00F25D1E /* DetailViewController.swift in Sources */,
+				1021955120627AC6003BF667 /* CustomDayTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
