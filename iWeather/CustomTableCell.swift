@@ -18,7 +18,7 @@ class CustomTableCell: UITableViewCell {
     @IBOutlet weak var dateText: UILabel!
     @IBOutlet weak var iconImage: UIImageView!
     
-    var data : Int?
+    var cityId : String?
     
     
     // var data : String?

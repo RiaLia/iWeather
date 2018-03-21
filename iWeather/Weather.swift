@@ -8,6 +8,10 @@
 
 import Foundation
 
+struct Wind : Codable {
+    let speed: Float
+    let deg: Float
+}
 
 struct Main : Codable {
     let temp: Float
@@ -22,9 +26,15 @@ struct Info : Codable {
     let weather: [Desc]
     let main : Main
     let dt_txt : String?
+    let wind : Wind
+    let name : String?
 }
 
 struct WeatherResponse: Codable {
     let list: [Info]
+}
+
+struct CityResponse: Codable {
+    let count : Int
 }
 
