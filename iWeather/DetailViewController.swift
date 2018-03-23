@@ -22,14 +22,21 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var favoriteIcon: UIImageView!
     
     var favorites : [String] = []
-    var rowId : Int?
     var passingCityText = ""
-   
-    
+    var defaults = UserDefaults.standard
+
     override func viewDidLoad() {
         super.viewDidLoad()
         cityText.text = passingCityText
-        
+    
+        if let maybeFavorites = defaults.stringArray(forKey: "Favorites") {
+            favorites = maybeFavorites
+        } else {
+            favorites = []
+        }
+        if favorites.contains(passingCityText) {
+            favoriteIcon.isHighlighted = true
+        }
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tap:)))
         favoriteIcon.isUserInteractionEnabled = true
         favoriteIcon.addGestureRecognizer(tap)
@@ -39,21 +46,28 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         
         if favoriteIcon.isHighlighted {
             favoriteIcon.isHighlighted = false
-            // Här vill jag kunna ta bort staden ut favoriterna.
-            // Behvöver även lösa så att informationen sparas
             
+           let itemToRemove = passingCityText
+            
+            while favorites.contains(itemToRemove) {
+                let itemToRemoveIndex = favorites.index(of: itemToRemove)
+                    favorites.remove(at: itemToRemoveIndex!)
+                    updateFavorite(favo: favorites)
+            }
         } else {
             favoriteIcon.isHighlighted = true
             favorites.append(passingCityText)
-            print("Favoriter: \(favorites)")
-            print(passingCityText)
+            updateFavorite(favo: favorites)
         }
     }
-
+    
+    func updateFavorite(favo: [String]) {
+        defaults.set(favo, forKey: "Favorites")
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

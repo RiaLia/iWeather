@@ -87,10 +87,10 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gothenburg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-4a-xEP">
-                                            <rect key="frame" x="11" y="6" width="147" height="32"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gothenburg, SE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fN-4a-xEP">
+                                            <rect key="frame" x="11" y="6" width="197" height="32"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="147" id="2Td-4Y-qbB"/>
+                                                <constraint firstAttribute="width" constant="197" id="2Td-4Y-qbB"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                             <nil key="textColor"/>
@@ -116,7 +116,7 @@
                                         <constraint firstItem="4ug-tB-jl4" firstAttribute="leading" secondItem="QGE-We-zSI" secondAttribute="leadingMargin" constant="-1" id="ROK-1o-O7m"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="KHN-Ay-TWG" secondAttribute="trailing" constant="-8" id="Rgn-Di-aVz"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="FYs-Yl-aWz" secondAttribute="trailing" constant="48" id="SJx-bP-YcJ"/>
-                                        <constraint firstItem="FYs-Yl-aWz" firstAttribute="leading" secondItem="2fN-4a-xEP" secondAttribute="trailing" constant="95" id="Tyh-KA-yoy"/>
+                                        <constraint firstItem="FYs-Yl-aWz" firstAttribute="leading" secondItem="2fN-4a-xEP" secondAttribute="trailing" constant="45" id="Tyh-KA-yoy"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="eH8-aq-v5d" secondAttribute="trailing" constant="-4" id="Viw-1V-KY5"/>
                                         <constraint firstItem="4ug-tB-jl4" firstAttribute="centerY" secondItem="eH8-aq-v5d" secondAttribute="centerY" id="WEH-ng-LYd"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="4ug-tB-jl4" secondAttribute="bottom" constant="19" id="Yao-SX-ZVQ"/>
@@ -135,6 +135,35 @@
                                     <outlet property="tempField" destination="FYs-Yl-aWz" id="4zy-mS-KY0"/>
                                     <outlet property="windText" destination="u2c-cU-fTR" id="ZH4-55-p0T"/>
                                     <segue destination="mNV-Gr-dVI" kind="show" identifier="sendToDetail" id="ojR-im-Gyv"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cityCell" id="N1s-pN-7Uc" customClass="CustomCityTableCell" customModule="iWeather" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="145.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="N1s-pN-7Uc" id="lAd-UP-iC8">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gothenburg, SE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Udk-Ie-FhA">
+                                            <rect key="frame" x="16" y="6" width="197" height="32"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="197" id="CUa-dM-JAk"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Udk-Ie-FhA" firstAttribute="centerY" secondItem="lAd-UP-iC8" secondAttribute="centerY" id="Cp4-wt-BpH"/>
+                                        <constraint firstItem="Udk-Ie-FhA" firstAttribute="leading" secondItem="lAd-UP-iC8" secondAttribute="leadingMargin" id="ihy-sy-f1q"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Udk-Ie-FhA" secondAttribute="bottom" constant="-5" id="lQ7-c1-kv1"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
+                                <connections>
+                                    <outlet property="cityText" destination="Udk-Ie-FhA" id="Osn-CH-Lbj"/>
+                                    <segue destination="mNV-Gr-dVI" kind="show" identifier="citySend" id="Oja-da-C6x"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -297,10 +326,10 @@
                                     <constraint firstItem="PH6-cn-I96" firstAttribute="top" secondItem="ixo-ps-BZ6" secondAttribute="top" constant="42" id="xgu-9m-Sfy"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gothenburg" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoh-1G-mxI">
-                                <rect key="frame" x="10" y="74" width="147" height="31"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gothenburg, SE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoh-1G-mxI">
+                                <rect key="frame" x="10" y="74" width="191" height="31"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="147" id="WGH-Hf-HKo"/>
+                                    <constraint firstAttribute="width" constant="191" id="WGH-Hf-HKo"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
                                 <nil key="textColor"/>
@@ -394,12 +423,9 @@
                                     <outlet property="delegate" destination="mNV-Gr-dVI" id="AhN-ZT-hZa"/>
                                 </connections>
                             </tableView>
-                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="NotFavorites" highlightedImage="Favorites" translatesAutoresizingMaskIntoConstraints="NO" id="96k-0o-5LT">
-                                <rect key="frame" x="154" y="77" width="26" height="26"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="26" id="3CB-LB-DAj"/>
-                                    <constraint firstAttribute="width" constant="26" id="uXR-K1-BUu"/>
-                                </constraints>
+                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="NotFavorites" highlightedImage="Favorites" translatesAutoresizingMaskIntoConstraints="NO" id="96k-0o-5LT">
+                                <rect key="frame" x="201" y="76" width="26" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="JcV-8Q-9Vr" appends="YES" id="ZHF-ti-kW8"/>
                                 </connections>
@@ -416,7 +442,6 @@
                             <constraint firstItem="qoh-1G-mxI" firstAttribute="leading" secondItem="G69-sS-1XX" secondAttribute="leading" constant="10" id="Aux-lr-OrT"/>
                             <constraint firstItem="ixo-ps-BZ6" firstAttribute="leading" secondItem="ArU-ZH-O0J" secondAttribute="leading" id="FGp-fk-0bZ"/>
                             <constraint firstItem="G69-sS-1XX" firstAttribute="trailing" secondItem="IkU-Fe-7NG" secondAttribute="trailing" constant="269" id="Fmt-jA-UDa"/>
-                            <constraint firstItem="96k-0o-5LT" firstAttribute="leading" secondItem="qoh-1G-mxI" secondAttribute="trailing" constant="-3" id="Hir-Ia-xcW"/>
                             <constraint firstItem="djo-fh-qfh" firstAttribute="bottom" secondItem="G69-sS-1XX" secondAttribute="bottom" id="L7x-Ze-kJu"/>
                             <constraint firstItem="jSV-Po-qj3" firstAttribute="top" secondItem="ixo-ps-BZ6" secondAttribute="bottom" constant="21" id="RFk-AV-cnC"/>
                             <constraint firstItem="G69-sS-1XX" firstAttribute="trailing" secondItem="xis-T8-oIy" secondAttribute="trailing" constant="9" id="Stl-cI-so0"/>
@@ -428,10 +453,8 @@
                             <constraint firstAttribute="trailing" secondItem="ixo-ps-BZ6" secondAttribute="trailing" id="hLK-8y-foj"/>
                             <constraint firstItem="qoh-1G-mxI" firstAttribute="top" secondItem="xis-T8-oIy" secondAttribute="top" id="mTN-D6-BTX"/>
                             <constraint firstItem="ixo-ps-BZ6" firstAttribute="leading" secondItem="jSV-Po-qj3" secondAttribute="leading" id="nkB-YD-hrq"/>
-                            <constraint firstItem="96k-0o-5LT" firstAttribute="leading" secondItem="G69-sS-1XX" secondAttribute="leading" constant="154" id="o2g-td-8wd"/>
                             <constraint firstItem="qoh-1G-mxI" firstAttribute="top" secondItem="G69-sS-1XX" secondAttribute="top" constant="10" id="q5V-f6-qDK"/>
                             <constraint firstItem="jSV-Po-qj3" firstAttribute="leading" secondItem="djo-fh-qfh" secondAttribute="leading" id="saW-oJ-CXU"/>
-                            <constraint firstItem="96k-0o-5LT" firstAttribute="centerY" secondItem="qoh-1G-mxI" secondAttribute="centerY" id="wWS-lL-EvX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="G69-sS-1XX"/>
                     </view>
@@ -462,4 +485,7 @@
         <image name="Sun" width="33" height="33"/>
         <image name="Thunder" width="50" height="47"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Oja-da-C6x"/>
+    </inferredMetricsTieBreakers>
 </document>

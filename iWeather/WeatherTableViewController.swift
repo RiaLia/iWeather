@@ -13,11 +13,12 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
   
     @IBOutlet weak var searchBar: UISearchBar!
     
-
-    //let cities = ["Göteborg", "Stockholm", "Malmö", "Sundsvall", "Karlstad"]
-    let weather = ["Clear", "Rain", "Snow", "Thunder", "SemiSunny" ]
+    var favorites : [String] = []
     var searchResult : [String] = []
+    var weatherResult : [String: Any] = [:]
     var searchController : UISearchController!
+    var defaults = UserDefaults.standard
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,24 +30,30 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         searchController.dimsBackgroundDuringPresentation = false
         
         navigationItem.searchController = searchController
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let maybeFavorites = defaults.stringArray(forKey: "Favorites") {
+            favorites = maybeFavorites
+        } else {
+            favorites = []
+        }
+        tableView.reloadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        searchController.searchBar.becomeFirstResponder()
+        searchController.searchBar.becomeFirstResponder()  
     }
-
-    // Moas tjusiga sök loop!
-    
-    // for x in 0..<weatherResponse {
-    // searchResulalt.append(weatherResponse.list[x].name)
-    
 
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text?.lowercased() {
            // searchResult = cities.filter { $0.lowercased().contains(text) }
-            // anropa någon metod, tex get weather.
-            searchResult = getWeather(searchText: text)
+            searchResult = getCity(searchText: text)
+     
+            // För att kunna för upp samtliga städer och sen filtrera dessa, så behövs det läsas in en lista med samtliga städer.
+            
+            
         }else {
             searchResult = []
         }
@@ -76,39 +83,55 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        if !useSearchResult {
+            if section == 0 {
+                return "Favorites"
+            } else if section == 1 {
+                return "Senaste"
+            }
+        } else {
+            
+        }
+        return nil
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if useSearchResult {
             return searchResult.count
         } else {
-        return 0
+        return favorites.count
         }
     }
 
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if useSearchResult {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cityCell", for: indexPath) as! CustomCityTableCell
+            
+            cell.cityId = searchResult[indexPath.row]
+            cell.cityText.text = searchResult[indexPath.row]
+            
+            return cell
+            
+        } else {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! CustomTableCell
 
-        let array : [String]
-        
-        if useSearchResult {
-            array = searchResult
-        } else {
-            array = []
-        }
-        cell.cityId = array[indexPath.row]
-        cell.cityText.text = array[indexPath.row]
+        cell.cityId = favorites[indexPath.row]
+        cell.cityText.text = favorites[indexPath.row]
+     //   let weatherStatus = getWeather(searchText:
+     
        // let weatherStatus = weather[indexPath.row]
         //cell.descText.text = weatherStatus
        // cell.iconImage.image = UIImage(named: weatherStatus)
-        
-
         return cell
+        }
+        
     }
     
-    func getWeather(searchText: String) -> [String] {
-        // Göt API Anrop här, byt ut forecast/weather till find
-        // Använd moas metod för att filtrera
+    func getCity(searchText: String) -> [String] {
         
         if let safeString = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
             let url = URL(string: "http://api.openweathermap.org/data/2.5/find?q=\(safeString)&APPID=3eacf70234b1d42777fea0c6f2ad9ee0") {
@@ -121,18 +144,14 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
                     print(actualError)
                 } else {
                     if let actualData = data {
-                        
                         let decoder = JSONDecoder()
-                        
                         do{
                             let cityResponse = try decoder.decode(CityResponse.self, from: actualData)
                             let weatherResponse = try decoder.decode(WeatherResponse.self, from: actualData)
-                            
                             DispatchQueue.main.async {
-                                
                                 self.searchResult = []
                                 for x in 0..<cityResponse.count {
-                                    self.searchResult.append(weatherResponse.list[x].name!)
+                                    self.searchResult.append(weatherResponse.list[x].name! + ", " + weatherResponse.list[x].sys.country!)
                                 }
                                 self.tableView.reloadData()
                             }
@@ -144,25 +163,28 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
                     }
                 }
             })
-            
             task.resume()
-            
         } else {
             print("Didn't work")
         }
         return searchResult
     }
-        
     
+  
     
     // MARK: - Navigation
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if segue.identifier == "sendToDetail" {
             if let cell = sender as? CustomTableCell{
-                let selectedRow = self.tableView.indexPathForSelectedRow!.row
                 let nextVc:DetailViewController = segue.destination as! DetailViewController
-                nextVc.rowId = selectedRow
+                nextVc.favorites = favorites
+                nextVc.passingCityText = cell.cityId!
+            }
+        } else if segue.identifier == "citySend" {
+            if let cell = sender as? CustomCityTableCell{
+                let nextVc:DetailViewController = segue.destination as! DetailViewController
+                nextVc.favorites = favorites
                 nextVc.passingCityText = cell.cityId!
             }
         }
