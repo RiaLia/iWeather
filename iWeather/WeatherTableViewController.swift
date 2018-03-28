@@ -31,6 +31,7 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         searchController.dimsBackgroundDuringPresentation = false
         
         navigationItem.searchController = searchController
+        //searchController.searchBar.barTintColor = UIColor.darkGray
         
         
        // let myApi = GetWeather()
@@ -151,10 +152,12 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
                                 
                                 DispatchQueue.main.async {
                                    
-                                    let weatherDesc = weatherResponse.list[0].weather[0].main
-                                    cell.iconImage.image = UIImage(named: weatherDesc!)
+                                    let desc = weatherResponse.list[0].weather[0].description
+                                    cell.descText.text = desc?.uppercased()
+                                    let main = weatherResponse.list[0].weather[0].main
+                                    cell.iconImage.image = UIImage(named: main!)
                                     cell.tempField.text = "\(Int(weatherResponse.list[0].main.temp))°C"
-                                    cell.windText.text = String(weatherResponse.list[0].wind.speed)
+                                    cell.windText.text = "\(String(weatherResponse.list[0].wind.speed)) M/S"
                                     
                                 }
                             } catch let e {
@@ -219,7 +222,11 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {
         if segue.identifier == "sendToDetail" {
             if let cell = sender as? CustomTableCell{
-                let nextVc:DetailViewController = segue.destination as! DetailViewController
+                let tabBarController = segue.destination as! UITabBarController
+                let firstVC = tabBarController.viewControllers![0]
+                tabBarController.tabBar.tintColor = UIColor.white
+                
+                let nextVc:DetailViewController = firstVC as! DetailViewController
                 nextVc.favorites = favorites
                 nextVc.passingCityText = cell.cityId!
             }

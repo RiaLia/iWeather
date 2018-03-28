@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cityText: UILabel!
@@ -18,10 +18,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var icon: UIImageView!
     @IBOutlet weak var windText: UILabel!
     @IBOutlet weak var windIcon: UIImageView!
-    
-    
-    @IBOutlet weak var headerBg: UIImageView!
     @IBOutlet weak var favoriteIcon: UIImageView!
+    
+    @IBOutlet weak var tabBar: UITabBar!
+    
     
     var favorites : [String] = []
     var passingCityText = ""
@@ -44,7 +44,11 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         favoriteIcon.isUserInteractionEnabled = true
         favoriteIcon.addGestureRecognizer(tap)
         
+        
+        
     }
+    
+   
     
     @objc func imageTapped(tap: UITapGestureRecognizer) {
         
@@ -64,6 +68,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
             updateFavorite(favo: favorites)
         }
     }
+    
     
     func updateFavorite(favo: [String]) {
         defaults.set(favo, forKey: "Favorites")
@@ -130,15 +135,32 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
                             
                             DispatchQueue.main.async {
                                 // Header
+                                let deg = weatherResponse.list[0].wind.deg
+                                
+                                UIView.animate(withDuration: 2.0, animations: {
+                                  self.windIcon.transform = CGAffineTransform(rotationAngle: CGFloat(deg * .pi * 2) / -360.0)
+                                })
+                                
+                                
                                 self.dateText.text = weatherResponse.list[0].dt_txt
-                                let weatherDesc = weatherResponse.list[0].weather[0].main
-                                self.descText.text = weatherDesc
-                                self.icon.image = UIImage(named: weatherDesc!)
+                                let desc = weatherResponse.list[0].weather[0].description
+                                self.descText.text = desc?.uppercased()
+                                let main = weatherResponse.list[0].weather[0].main
+                                self.icon.image = UIImage(named: main!)
                                 self.tempText.text = "\(Int(weatherResponse.list[0].main.temp))°C"
-                                self.windText.text = "\(String(weatherResponse.list[0].wind.speed)) m/s"
+                                self.windText.text = "\(String(weatherResponse.list[0].wind.speed)) M/S"
                                 //Cell
                                 let i = (indexPath.row + 1)
+                                
                                 cell.date.text = weatherResponse.list[i].dt_txt
+                                
+                                /* Testa ändra formatet på datumet
+                                 
+                                let date = weatherResponse.list[i].dt_txt
+                                let newDate = dateFormater(date)
+                                cell.date.text = newDate.text
+                                */
+                                
                                 cell.temp.text = "\(Int(weatherResponse.list[i].main.temp))°C"
                                 let weatherStatus = weatherResponse.list[i].weather[0].main
                                 cell.icon.image = UIImage(named: weatherStatus!)
@@ -157,6 +179,14 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         }
         return cell
     }
+    
+    func rotateImage() {
+        UIView.animate(withDuration: 2.0, animations: {
+            self.windIcon.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
+        })
+    }
+    
+    
  
    
     /*
