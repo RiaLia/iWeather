@@ -15,9 +15,10 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     
     var favorites : [String] = []
     var searchResult : [String] = []
-    var weatherResult : [String: Any] = [:]
     var searchController : UISearchController!
     var defaults = UserDefaults.standard
+    
+    
     
     
     override func viewDidLoad() {
@@ -30,6 +31,15 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         searchController.dimsBackgroundDuringPresentation = false
         
         navigationItem.searchController = searchController
+        
+        
+       // let myApi = GetWeather()
+      //  myApi.getInfo(searchText: "Los Angeles", type: "forecast", indexPath: 0)
+       // myApi.getCity()
+        
+        
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,11 +58,10 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
 
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text?.lowercased() {
-           // searchResult = cities.filter { $0.lowercased().contains(text) }
+    
             searchResult = getCity(searchText: text)
-     
-            // För att kunna för upp samtliga städer och sen filtrera dessa, så behövs det läsas in en lista med samtliga städer.
             
+            // För att kunna för upp samtliga städer och sen filtrera dessa, så behövs det läsas in en lista med samtliga städer.
             
         }else {
             searchResult = []
@@ -120,16 +129,50 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! CustomTableCell
 
         cell.cityId = favorites[indexPath.row]
-        cell.cityText.text = favorites[indexPath.row]
-     //   let weatherStatus = getWeather(searchText:
-     
-       // let weatherStatus = weather[indexPath.row]
-        //cell.descText.text = weatherStatus
-       // cell.iconImage.image = UIImage(named: weatherStatus)
+        let currentCity = favorites[indexPath.row]
+        cell.cityText.text = currentCity
+        
+            if let safeString = currentCity.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                let url = URL(string: "http://api.openweathermap.org/data/2.5/forecast?q=\(safeString)&units=metric&APPID=3eacf70234b1d42777fea0c6f2ad9ee0") {
+                
+                let request = URLRequest(url: url)
+                let task = URLSession.shared.dataTask(with: request, completionHandler:
+                { (data: Data?, response: URLResponse?, error: Error?) in
+                    
+                    if let actualError = error {
+                        print(actualError)
+                    } else {
+                        if let actualData = data {
+                            
+                            let decoder = JSONDecoder()
+                            
+                            do{
+                                let weatherResponse = try decoder.decode(WeatherResponse.self, from: actualData)
+                                
+                                DispatchQueue.main.async {
+                                   
+                                    let weatherDesc = weatherResponse.list[0].weather[0].main
+                                    cell.iconImage.image = UIImage(named: weatherDesc!)
+                                    cell.tempField.text = "\(Int(weatherResponse.list[0].main.temp))°C"
+                                    cell.windText.text = String(weatherResponse.list[0].wind.speed)
+                                    
+                                }
+                            } catch let e {
+                                print("Error parsing json: \(e)")
+                            }
+                        } else {
+                            print("Data was nil")
+                        }
+                    }
+                })
+                task.resume()
+            } else {
+                print("Didn't work")
+            }
         return cell
         }
-        
     }
+    
     
     func getCity(searchText: String) -> [String] {
         
@@ -169,9 +212,8 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         }
         return searchResult
     }
-    
-  
-    
+ 
+ 
     // MARK: - Navigation
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any!) {

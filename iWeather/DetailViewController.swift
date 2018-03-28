@@ -19,11 +19,14 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet weak var windText: UILabel!
     @IBOutlet weak var windIcon: UIImageView!
     
+    
+    @IBOutlet weak var headerBg: UIImageView!
     @IBOutlet weak var favoriteIcon: UIImageView!
     
     var favorites : [String] = []
     var passingCityText = ""
     var defaults = UserDefaults.standard
+    var myApi = GetWeather()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +43,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         let tap = UITapGestureRecognizer(target: self, action: #selector(imageTapped(tap:)))
         favoriteIcon.isUserInteractionEnabled = true
         favoriteIcon.addGestureRecognizer(tap)
+        
     }
     
     @objc func imageTapped(tap: UITapGestureRecognizer) {
@@ -77,6 +81,33 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 15
     }
+    /*
+ 
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as! CustomDayTableViewCell
+        
+        let i = (indexPath.row + 1)
+        
+        myApi.getInfo(searchText: passingCityText, type: "forecast", indexPath: i)
+        
+        var date = myApi.info["Date"]
+        cell.date.text = String(describing: date)
+        var response = myApi.info["Main"]
+       // cell.icon.image = UIImage(named: (response as? String)!)
+        print(response)
+        
+        
+        
+        
+        // let date: String? = myApi.info.objectForKey("nextPageToken") as? String
+        //let date = myApi.info
+        //self.dateText.text = String(describing: date)
+       
+        
+        return cell
+    }
+ */
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as! CustomDayTableViewCell
@@ -104,7 +135,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
                                 self.descText.text = weatherDesc
                                 self.icon.image = UIImage(named: weatherDesc!)
                                 self.tempText.text = "\(Int(weatherResponse.list[0].main.temp))°C"
-                                self.windText.text = String(weatherResponse.list[0].wind.speed)
+                                self.windText.text = "\(String(weatherResponse.list[0].wind.speed)) m/s"
                                 //Cell
                                 let i = (indexPath.row + 1)
                                 cell.date.text = weatherResponse.list[i].dt_txt
@@ -126,6 +157,7 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         }
         return cell
     }
+ 
    
     /*
     // MARK: - Navigation

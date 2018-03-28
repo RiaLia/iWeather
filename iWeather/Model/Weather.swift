@@ -43,5 +43,4 @@ struct WeatherResponse: Codable {
 struct CityResponse: Codable {
     let count : Int
     let list : [Info]
-}
-
+} 
