@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate {
+class DetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UITabBarControllerDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var cityText: UILabel!
@@ -26,7 +26,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     var favorites : [String] = []
     var passingCityText = ""
     var defaults = UserDefaults.standard
-    var myApi = GetWeather()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,9 +43,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
         favoriteIcon.isUserInteractionEnabled = true
         favoriteIcon.addGestureRecognizer(tap)
         
-        
-        
     }
+    
+    
+    
     
    
     
@@ -86,32 +86,6 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 15
     }
-    /*
- 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "dayCell", for: indexPath) as! CustomDayTableViewCell
-        
-        let i = (indexPath.row + 1)
-        
-        myApi.getInfo(searchText: passingCityText, type: "forecast", indexPath: i)
-        
-        var date = myApi.info["Date"]
-        cell.date.text = String(describing: date)
-        var response = myApi.info["Main"]
-       // cell.icon.image = UIImage(named: (response as? String)!)
-        print(response)
-        
-        
-        
-        
-        // let date: String? = myApi.info.objectForKey("nextPageToken") as? String
-        //let date = myApi.info
-        //self.dateText.text = String(describing: date)
-       
-        
-        return cell
-    }
- */
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -148,19 +122,11 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
                                 let main = weatherResponse.list[0].weather[0].main
                                 self.icon.image = UIImage(named: main!)
                                 self.tempText.text = "\(Int(weatherResponse.list[0].main.temp))°C"
-                                self.windText.text = "\(String(weatherResponse.list[0].wind.speed)) M/S"
+                                self.windText.text = "\(Int(weatherResponse.list[0].wind.speed)) M/S"
                                 //Cell
                                 let i = (indexPath.row + 1)
                                 
                                 cell.date.text = weatherResponse.list[i].dt_txt
-                                
-                                /* Testa ändra formatet på datumet
-                                 
-                                let date = weatherResponse.list[i].dt_txt
-                                let newDate = dateFormater(date)
-                                cell.date.text = newDate.text
-                                */
-                                
                                 cell.temp.text = "\(Int(weatherResponse.list[i].main.temp))°C"
                                 let weatherStatus = weatherResponse.list[i].weather[0].main
                                 cell.icon.image = UIImage(named: weatherStatus!)
@@ -185,18 +151,4 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
             self.windIcon.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
         })
     }
-    
-    
- 
-   
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

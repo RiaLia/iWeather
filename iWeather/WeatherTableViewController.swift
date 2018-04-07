@@ -18,9 +18,13 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     var searchController : UISearchController!
     var defaults = UserDefaults.standard
     
+    var currentWeatherCondition : String? = ""
+    var currentDesc : String? = ""
+    var currentTemp : Int? = 0
+    var currentWind : Int? = 0
+    var currentHumidity : Int? = 0
     
-    
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,15 +35,6 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
         searchController.dimsBackgroundDuringPresentation = false
         
         navigationItem.searchController = searchController
-        //searchController.searchBar.barTintColor = UIColor.darkGray
-        
-        
-       // let myApi = GetWeather()
-      //  myApi.getInfo(searchText: "Los Angeles", type: "forecast", indexPath: 0)
-       // myApi.getCity()
-        
-        
-        
         
     }
     
@@ -56,14 +51,12 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
     override func viewDidAppear(_ animated: Bool) {
         searchController.searchBar.becomeFirstResponder()  
     }
+  
 
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text?.lowercased() {
     
-            searchResult = getCity(searchText: text)
-            
-            // För att kunna för upp samtliga städer och sen filtrera dessa, så behövs det läsas in en lista med samtliga städer.
-            
+            searchResult = getCity(searchText: text, type: "find")
         }else {
             searchResult = []
         }
@@ -123,12 +116,18 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
             
             cell.cityId = searchResult[indexPath.row]
             cell.cityText.text = searchResult[indexPath.row]
+            cell.currentTemp = currentTemp!
+            cell.currentWeatherCondition = currentWeatherCondition!
+            cell.currentWind = currentWind!
+            cell.currentHumidity = currentHumidity
             
             return cell
             
         } else {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath) as! CustomTableCell
 
+        
+            
         cell.cityId = favorites[indexPath.row]
         let currentCity = favorites[indexPath.row]
         cell.cityText.text = currentCity
@@ -154,10 +153,17 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
                                    
                                     let desc = weatherResponse.list[0].weather[0].description
                                     cell.descText.text = desc?.uppercased()
-                                    let main = weatherResponse.list[0].weather[0].main
-                                    cell.iconImage.image = UIImage(named: main!)
-                                    cell.tempField.text = "\(Int(weatherResponse.list[0].main.temp))°C"
-                                    cell.windText.text = "\(String(weatherResponse.list[0].wind.speed)) M/S"
+                                    
+                                    cell.currentWeatherCondition = weatherResponse.list[0].weather[0].main
+                                    cell.iconImage.image = UIImage(named: cell.currentWeatherCondition!)
+                                    
+                                    cell.currentTemp = Int(weatherResponse.list[0].main.temp)
+                                    cell.tempField.text = "\(cell.currentTemp!)°C"
+                                    
+                                    cell.currentWind = Int(weatherResponse.list[0].wind.speed)
+                                    cell.windText.text = "\(String(describing: cell.currentWind!)) M/S"
+                                    
+                                    cell.currentHumidity = weatherResponse.list[0].main.humidity
                                     
                                 }
                             } catch let e {
@@ -172,15 +178,18 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
             } else {
                 print("Didn't work")
             }
+ 
+ 
         return cell
         }
     }
     
     
-    func getCity(searchText: String) -> [String] {
+    func getCity(searchText: String, type: String) -> [String] {
+        
         
         if let safeString = searchText.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
-            let url = URL(string: "http://api.openweathermap.org/data/2.5/find?q=\(safeString)&APPID=3eacf70234b1d42777fea0c6f2ad9ee0") {
+            let url = URL(string: "http://api.openweathermap.org/data/2.5/\(type)?q=\(safeString)&units=metric&APPID=3eacf70234b1d42777fea0c6f2ad9ee0") {
             
             let request = URLRequest(url: url)
             let task = URLSession.shared.dataTask(with: request, completionHandler:
@@ -192,15 +201,28 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
                     if let actualData = data {
                         let decoder = JSONDecoder()
                         do{
-                            let cityResponse = try decoder.decode(CityResponse.self, from: actualData)
-                            let weatherResponse = try decoder.decode(WeatherResponse.self, from: actualData)
-                            DispatchQueue.main.async {
-                                self.searchResult = []
-                                for x in 0..<cityResponse.count {
-                                    self.searchResult.append(weatherResponse.list[x].name! + ", " + weatherResponse.list[x].sys.country!)
+                            
+                            self.searchResult = []
+                            
+                           
+                                let cityResponse = try decoder.decode(CityResponse.self, from: actualData)
+                            
+                                DispatchQueue.main.async {
+                                    if self.useSearchResult {
+                                        
+                                    for x in 0..<cityResponse.count {
+                                        self.searchResult.append(cityResponse.list[x].name! + ", " + cityResponse.list[x].sys.country!)
+                                        
+                                        self.currentTemp = Int(cityResponse.list[0].main.temp)
+                                        self.currentWind = Int(cityResponse.list[0].wind.speed)
+                                        self.currentHumidity = cityResponse.list[0].main.humidity
+                                        self.currentWeatherCondition = cityResponse.list[0].weather[0].main
+                                    }
+                                    self.tableView.reloadData()
+                                    
+                                        
+                                    } 
                                 }
-                                self.tableView.reloadData()
-                            }
                         } catch let e {
                             print("Error parsing json: \(e)")
                         }
@@ -229,12 +251,46 @@ class WeatherTableViewController: UITableViewController, UISearchResultsUpdating
                 let nextVc:DetailViewController = firstVC as! DetailViewController
                 nextVc.favorites = favorites
                 nextVc.passingCityText = cell.cityId!
+                
+                let secVC = tabBarController.viewControllers![1]
+                let nextSec : RecViewController = secVC as! RecViewController
+                nextSec.test = cell.cityId
+                nextSec.currentWeatherCondition = cell.currentWeatherCondition
+                nextSec.currentTemp = cell.currentTemp
+                nextSec.currentWind = cell.currentWind
+                
+                let thirdVC = tabBarController.viewControllers![2]
+                let nextThird : GraphViewController = thirdVC as! GraphViewController
+                nextThird.currentCity = cell.cityId!
+                nextThird.currentTemp = cell.currentTemp
+                nextThird.currentWind = cell.currentWind
+                nextThird.currentHumidity = cell.currentHumidity!
+                
             }
         } else if segue.identifier == "citySend" {
             if let cell = sender as? CustomCityTableCell{
-                let nextVc:DetailViewController = segue.destination as! DetailViewController
+                
+                let tabBarController = segue.destination as! UITabBarController
+                let firstVC = tabBarController.viewControllers![0]
+                tabBarController.tabBar.tintColor = UIColor.white
+                
+                let nextVc:DetailViewController = firstVC as! DetailViewController
                 nextVc.favorites = favorites
                 nextVc.passingCityText = cell.cityId!
+                
+                let secVC = tabBarController.viewControllers![1]
+                let nextSec : RecViewController = secVC as! RecViewController
+                nextSec.test = cell.cityId
+                nextSec.currentWeatherCondition = cell.currentWeatherCondition
+                nextSec.currentTemp = cell.currentTemp
+                nextSec.currentWind = cell.currentWind
+                
+                let thirdVC = tabBarController.viewControllers![2]
+                let nextThird : GraphViewController = thirdVC as! GraphViewController
+                nextThird.currentCity = cell.cityId!
+                nextThird.currentTemp = cell.currentTemp
+                nextThird.currentWind = cell.currentWind
+                nextThird.currentHumidity = cell.currentHumidity!
             }
         }
     }

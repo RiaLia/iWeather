@@ -9,6 +9,11 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="MyanmarSangamMN.ttc">
+            <string>MyanmarSangamMN-Bold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
@@ -18,13 +23,25 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloudsBackground" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lGM-eu-XcO">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="startScreen" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lGM-eu-XcO">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="iWeather" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TS5-Gr-kOJ">
+                                <rect key="frame" x="138" y="148" width="98" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="URt-De-8gv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MyanmarSangamMN-Bold" family="Myanmar Sangam MN" pointSize="25"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="TS5-Gr-kOJ" firstAttribute="centerX" secondItem="lGM-eu-XcO" secondAttribute="centerX" id="5PN-cL-cxO"/>
                             <constraint firstItem="lGM-eu-XcO" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="74r-0n-EHW"/>
+                            <constraint firstItem="TS5-Gr-kOJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="138" id="7Rq-X1-XuM"/>
                             <constraint firstItem="lGM-eu-XcO" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="RNA-GB-eHg"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="TS5-Gr-kOJ" secondAttribute="bottom" constant="482" id="U7M-m6-zn3"/>
                             <constraint firstAttribute="trailing" secondItem="lGM-eu-XcO" secondAttribute="trailing" id="xyo-hz-lrT"/>
                             <constraint firstItem="lGM-eu-XcO" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="zz6-at-C5q"/>
                         </constraints>
@@ -37,6 +54,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cloudsBackground" width="1053" height="658"/>
+        <image name="startScreen" width="640" height="640"/>
     </resources>
 </document>

@@ -19,10 +19,12 @@ class CustomTableCell: UITableViewCell {
     @IBOutlet weak var iconImage: UIImageView!
     
     var cityId : String?
+    var currentWeatherCondition : String?
+    var currentDesc : String?
+    var currentTemp : Int?
+    var currentWind : Int?
+    var currentHumidity : Int?
     
-    
-    // var data : String?
-    // För att kunna hämta RÄTT cell även när man söker
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -11,7 +11,13 @@ import UIKit
 class CustomCityTableCell: UITableViewCell {
     
     @IBOutlet weak var cityText: UILabel!
+    
     var cityId : String?
+    var currentWeatherCondition : String?
+    var currentDesc : String?
+    var currentTemp : Int?
+    var currentWind : Int?
+    var currentHumidity : Int?
 
     override func awakeFromNib() {
         super.awakeFromNib()
