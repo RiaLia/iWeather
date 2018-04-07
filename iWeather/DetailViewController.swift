@@ -115,8 +115,8 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
                                   self.windIcon.transform = CGAffineTransform(rotationAngle: CGFloat(deg * .pi * 2) / -360.0)
                                 })
                                 
-                                
-                                self.dateText.text = weatherResponse.list[0].dt_txt
+                                let date = weatherResponse.list[0].dt_txt!
+                                self.dateText.text = self.getFormattedDate(myDate: date)
                                 let desc = weatherResponse.list[0].weather[0].description
                                 self.descText.text = desc?.uppercased()
                                 let main = weatherResponse.list[0].weather[0].main
@@ -126,7 +126,10 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
                                 //Cell
                                 let i = (indexPath.row + 1)
                                 
-                                cell.date.text = weatherResponse.list[i].dt_txt
+                                let date2 = weatherResponse.list[i].dt_txt!
+                                cell.date.text = self.getFormattedDate(myDate: date2)
+                                
+                                
                                 cell.temp.text = "\(Int(weatherResponse.list[i].main.temp))°C"
                                 let weatherStatus = weatherResponse.list[i].weather[0].main
                                 cell.icon.image = UIImage(named: weatherStatus!)
@@ -151,4 +154,18 @@ class DetailViewController: UIViewController, UITableViewDataSource, UITableView
             self.windIcon.transform = CGAffineTransform(rotationAngle: (180.0 * .pi) / 180.0)
         })
     }
+    
+    
+         func getFormattedDate(myDate: String) -> String{
+            let dateFormatterGet = DateFormatter()
+            dateFormatterGet.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "dd MMM, HH:mm"
+            
+            let testString = myDate
+            let date: Date? = dateFormatterGet.date(from: testString)
+            return dateFormatterPrint.string(from: date!);
+        }
+    
 }
