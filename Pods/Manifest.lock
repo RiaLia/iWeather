@@ -1,0 +1,23 @@
+PODS:
+  - Charts (3.1.0):
+    - Charts/Core (= 3.1.0)
+  - Charts/Core (3.1.0)
+  - FrameAccessor (1.3.2)
+  - GraphKit (1.1.1):
+    - FrameAccessor (~> 1.3.2)
+    - MKFoundationKit/NSArray (~> 1.2.2)
+  - MKFoundationKit/NSArray (1.2.3)
+
+DEPENDENCIES:
+  - Charts
+  - GraphKit (= 1.1.1)
+
+SPEC CHECKSUMS:
+  Charts: 0b0c96f6118b6ce63f11adbcaa3b31045ee4d772
+  FrameAccessor: 0f7ba6ce37be9a5d0302a27c731dca70af8d438b
+  GraphKit: e2336bed87d9313020af525dedbca54b62e93533
+  MKFoundationKit: 882d74557944790d4d9e172961ed71d6a66804b7
+
+PODFILE CHECKSUM: e0ef107946f7a7a24556c6ab7f60ec11b28bde18
+
+COCOAPODS: 1.4.0
